@@ -1,19 +1,15 @@
 import { SafeAreaView, StyleSheet, Text, View, Platform, StatusBar, TextInput, Button } from 'react-native';
 import SearchBar from '../components/SearchBar';
+import Recommendation from '../components/Recommendation';
 
-export default function HomeScreen() {
+export default HomeScreen = () => {
     return (
-        <SafeAreaView style={{
-            display: 'flex',
-            flexDirection: 'column'
-        }}>
+        <SafeAreaView>
             <View style={{
-                display: 'flex',
-                flexDirection: 'column',
                 backgroundColor: 'green',
-                height: '55%',
-                paddingTop: StatusBar.currentHeight + 20,
-                paddingStart: 20
+                paddingHorizontal: 20,
+                paddingTop: 50,
+                paddingBottom: 20
             }}>
                 <Text style={{
                     color: 'white',
@@ -28,11 +24,11 @@ export default function HomeScreen() {
                     Let get some search
                 </Text>
                 <SearchBar />
-                <View style={{ width: 100, alignItems: 'center', marginTop: 10 }}>
+                <View style={{ width: 100, marginTop: 10 }}>
                     <Button title='Search' />
                 </View>
- 
             </View>
+            <Recommendation />
         </SafeAreaView >
     );
 }
