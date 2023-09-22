@@ -4,6 +4,7 @@ import axios from "axios";
 import NonProfitDetailData from "../modals/NonProfitDetailData";
 import { ScrollView } from "react-native-virtualized-view";
 import { Button, Title } from "react-native-paper";
+import { storage } from "../database";
 
 
 export default NonProfitDetailScreen = ({ route, navigation }) => {
@@ -75,7 +76,7 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
         <OpenURLButton url={detail.websiteUrl}>
           Website
         </OpenURLButton>
-        <Button icon="heart-outline" mode="contained" onPress={() => console.log('Pressed')} buttonColor='green'>
+        <Button icon="heart-outline" mode="contained" onPress={() => storage.set(detail.ein, JSON.stringify(detail))} buttonColor='green'>
           Favourite
         </Button>
       </View>
