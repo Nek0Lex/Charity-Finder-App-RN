@@ -7,14 +7,14 @@ import {
   StatusBar,
   TextInput,
   Button,
-  ScrollView,
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import Recommendation from "../components/Recommendation";
+import { ScrollView } from 'react-native-virtualized-view';
 
 export default HomeScreen = ({ navigation }) => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: "white" }}>
       <ScrollView
         nestedScrollEnabled={true}
         showsVerticalScrollIndicator={false}
@@ -41,7 +41,7 @@ export default HomeScreen = ({ navigation }) => {
               fontSize: 20,
             }}
           >
-            Let get some search
+            Let get some search!
           </Text>
           <SearchBar />
           <View style={{ width: 100, marginTop: 10 }}>

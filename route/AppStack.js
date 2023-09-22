@@ -35,7 +35,7 @@ export default function AppStack() {
       <Stack.Screen
         name="NonProfitDetail"
         component={NonProfitDetailScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({ headerShown: true, title: route.params.title })}
       />
     </Stack.Navigator>
   );
