@@ -18,7 +18,6 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
   let param = route.params;
   const [detail, setDetail] = useState(new NonProfitDetailData());
   const [isFavourite, setIsFavourite] = useState(false);
-  const [favBtnStyle, setFavBtnStyle] = useState(styles.button);
 
   useEffect(() => {
     axios
@@ -92,7 +91,7 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ display: "flex", flexGrow: 1 }}>
+    <SafeAreaView style={styles.safeViewStyle}>
       <View style={styles.container}>
         <View style={styles.profile}>
           <Image
@@ -109,7 +108,10 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
             <Text style={styles.locationText}>📍{detail.locationAddress}</Text>
           </View>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ height: "100%", flex: 1 }}
+        >
           <Text style={styles.desc}>
             {detail.descriptionLong == null
               ? detail.description
@@ -174,6 +176,6 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginVertical: 20,
+    marginBottom: 10,
   },
 });

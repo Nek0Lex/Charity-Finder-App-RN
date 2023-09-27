@@ -50,15 +50,19 @@ export default HomeScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.topContainer}>
-          <IconButton
-            style={{
-              alignSelf: "flex-end",
-            }}
-            icon="heart"
-            iconColor="white"
-            onPress={() => navigation.navigate("Favourite")}
-          />
-          <Text style={styles.title}>Hello</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.title}>Hello</Text>
+            <IconButton
+              style={{
+                alignSelf: "flex-end",
+              }}
+              paddingHorizontal={0}
+              icon="heart"
+              iconColor="white"
+              onPress={() => navigation.navigate("Favourite")}
+            />
+          </View>
+
           <Text style={styles.searchTitle}>Let get some search!</Text>
           <SearchBar
             onSearch={(searchResult) => {
@@ -76,10 +80,11 @@ const styles = StyleSheet.create({
   topContainer: {
     backgroundColor: "green",
     paddingHorizontal: 20,
-    paddingTop: 50,
+    paddingTop: 30,
     paddingBottom: 20,
   },
   title: {
+    flex: 1,
     color: "white",
     fontSize: 40,
   },

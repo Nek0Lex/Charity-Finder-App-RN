@@ -45,15 +45,12 @@ export default function SearchBar({ onSearch }) {
           setSearchText(newText);
         }}
       />
-      <View style={{ width: 100, marginTop: 10 }}>
+      <View style={{ width: 100, marginTop: 15 }}>
         <Button
           title="Search"
           mode="outlined"
           onPress={() => search()}
-          style={{
-            borderWidth: 2,
-            borderColor: "white",
-          }}
+          style={styles.searchButton}
           textColor="white"
           borderColor="white"
         >
@@ -67,6 +64,10 @@ export default function SearchBar({ onSearch }) {
 const styles = StyleSheet.create({
   icon: {
     padding: 40,
+  },
+  searchButton: {
+    borderWidth: 2,
+    borderColor: "white",
   },
   container: {
     width: "100%",
