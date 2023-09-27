@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import SearchBar from "../components/SearchBar";
 import Recommendation from "../components/Recommendation";
-import { ScrollView } from 'react-native-virtualized-view';
+import { ScrollView } from "react-native-virtualized-view";
 
 export default HomeScreen = ({ navigation }) => {
   return (
@@ -27,6 +27,10 @@ export default HomeScreen = ({ navigation }) => {
             paddingBottom: 20,
           }}
         >
+          <Button
+            title="test fav"
+            onPress={() => navigation.navigate("Favourite")}
+          ></Button>
           <Text
             style={{
               color: "white",

@@ -1,11 +1,18 @@
 import { useEffect, useState, useCallback } from "react";
-import { View, Text, SafeAreaView, Image, StyleSheet, Linking, Alert } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  StyleSheet,
+  Linking,
+  Alert,
+} from "react-native";
 import axios from "axios";
 import NonProfitDetailData from "../modals/NonProfitDetailData";
 import { ScrollView } from "react-native-virtualized-view";
 import { Button, Title } from "react-native-paper";
-import { storage } from "../database";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default NonProfitDetailScreen = ({ route, navigation }) => {
   let param = route.params;
@@ -17,16 +24,16 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
         `https://partners.every.org/v0.2/nonprofit/${param.ein}?apiKey=pk_live_b91eec9a87a8a37187b1e1d1bb505b63`
       )
       .then((response) => {
-        let data = response.data.data
-        let nonprofit = data.nonprofit
-        let detail = new NonProfitDetailData(data)
+        let data = response.data.data;
+        let nonprofit = data.nonprofit;
+        let detail = new NonProfitDetailData(data);
         setDetail(detail);
       });
   }, []);
 
   const OpenURLButton = ({ url, children }) => {
     const handlePress = useCallback(async () => {
-      if (url != null && url != '') {
+      if (url != null && url != "") {
         const supported = await Linking.canOpenURL(url);
         if (supported) {
           await Linking.openURL(url);
@@ -36,47 +43,64 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
       } else {
         Alert.alert(`They don't have website for this :<`);
       }
-
     }, [url]);
 
-    return <Button icon="link" mode="contained" onPress={handlePress} buttonColor='green'>
-      Website
-    </Button>;
+    return (
+      <Button
+        icon="link"
+        mode="contained"
+        onPress={handlePress}
+        buttonColor="green"
+      >
+        Website
+      </Button>
+    );
+  };
+
+  const StoreData = async (ein, detailData) => {
+    try {
+      console.log(`Start saving ${ein}...`);
+      const jsonValue = JSON.stringify(detailData);
+      await AsyncStorage.setItem(ein, jsonValue);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <SafeAreaView style={{ display: "flex", flexGrow: 1 }}>
       <View style={styles.container}>
-        <View
-          style={styles.profile}
-        >
+        <View style={styles.profile}>
           <Image
             source={{ uri: detail.logoUrl }}
             height={90}
             width={90}
             style={styles.image}
-            onError={(e) => { console.log(e) }}
+            onError={(e) => {
+              console.log(e);
+            }}
           />
           <View style={{ flex: 1 }}>
-            <Text style={styles.profileText}>
-              {param.title}
-            </Text>
-            <Text style={styles.locationText}>
-              📍{detail.locationAddress}
-            </Text>
+            <Text style={styles.profileText}>{param.title}</Text>
+            <Text style={styles.locationText}>📍{detail.locationAddress}</Text>
           </View>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.desc}>
-            {detail.descriptionLong == null ? detail.description : detail.descriptionLong}
+            {detail.descriptionLong == null
+              ? detail.description
+              : detail.descriptionLong}
           </Text>
         </ScrollView>
       </View>
       <View style={styles.button}>
-        <OpenURLButton url={detail.websiteUrl}>
-          Website
-        </OpenURLButton>
-        <Button icon="heart-outline" mode="contained" onPress={() => storage.set(detail.ein, JSON.stringify(detail))} buttonColor='green'>
+        <OpenURLButton url={detail.websiteUrl}>Website</OpenURLButton>
+        <Button
+          icon="heart-outline"
+          mode="contained"
+          onPress={() => StoreData(detail.ein, detail)}
+          buttonColor="green"
+        >
           Favourite
         </Button>
       </View>
@@ -87,21 +111,21 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     // backgroundColor: "red",
-    display: 'flex',
+    display: "flex",
     padding: 20,
-    flexGrow: 1
+    flexGrow: 1,
   },
   profile: {
-    display: 'flex',
+    display: "flex",
     flexDirection: "row",
   },
   profileText: {
     paddingHorizontal: 10,
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   locationText: {
-    width: '80%',
+    width: "80%",
     margin: 10,
   },
   image: {
@@ -109,12 +133,11 @@ const styles = StyleSheet.create({
   },
   desc: {
     color: "black",
-    marginTop: 20
+    marginTop: 20,
   },
   button: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 20
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 20,
   },
 });
-

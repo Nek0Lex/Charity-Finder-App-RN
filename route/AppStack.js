@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screen/HomeScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import NonProfitDetailScreen from "../screen/NonProfitDetailScreen";
+import FavouriteScreen from "../screen/FavouriteScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +36,15 @@ export default function AppStack() {
       <Stack.Screen
         name="NonProfitDetail"
         component={NonProfitDetailScreen}
-        options={({ route }) => ({ headerShown: true, title: route.params.title })}
+        options={({ route }) => ({
+          headerShown: true,
+          title: route.params.title,
+        })}
+      />
+      <Stack.Screen
+        name="Favourite"
+        component={FavouriteScreen}
+        options={({ route }) => ({ headerShown: true, title: "Favourite" })}
       />
     </Stack.Navigator>
   );
