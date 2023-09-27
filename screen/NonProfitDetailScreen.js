@@ -17,6 +17,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default NonProfitDetailScreen = ({ route, navigation }) => {
   let param = route.params;
   const [detail, setDetail] = useState(new NonProfitDetailData());
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [favBtnStyle, setFavBtnStyle] = useState(styles.button);
 
   useEffect(() => {
     axios
@@ -29,6 +31,17 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
         let detail = new NonProfitDetailData(data);
         setDetail(detail);
       });
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const keys = await AsyncStorage.getAllKeys();
+      console.log(keys);
+      const isFav = keys.includes(param.ein);
+      setIsFavourite(isFav);
+    };
+
+    fetchData();
   }, []);
 
   const OpenURLButton = ({ url, children }) => {
@@ -62,9 +75,20 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
       console.log(`Start saving ${ein}...`);
       const jsonValue = JSON.stringify(detailData);
       await AsyncStorage.setItem(ein, jsonValue);
+      setIsFavourite(true);
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const DeleteData = async (ein) => {
+    try {
+      await AsyncStorage.removeItem(ein);
+      setIsFavourite(false);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(`Removed ${ein}.`);
   };
 
   return (
@@ -95,20 +119,32 @@ export default NonProfitDetailScreen = ({ route, navigation }) => {
       </View>
       <View style={styles.button}>
         <OpenURLButton url={detail.websiteUrl}>Website</OpenURLButton>
-        <Button
-          icon="heart-outline"
-          mode="contained"
-          onPress={() => StoreData(detail.ein, detail)}
-          buttonColor="green"
-        >
-          Favourite
-        </Button>
+        {isFavourite ? (
+          <Button
+            icon="heart"
+            mode="contained"
+            onPress={() => DeleteData(detail.ein)}
+            buttonColor="green"
+          >
+            Favourite
+          </Button>
+        ) : (
+          <Button
+            icon="heart-outline"
+            mode="contained"
+            onPress={() => StoreData(detail.ein, detail)}
+            buttonColor="green"
+          >
+            Favourite
+          </Button>
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeViewStyle: { display: "flex", flexGrow: 1 },
   container: {
     // backgroundColor: "red",
     display: "flex",
