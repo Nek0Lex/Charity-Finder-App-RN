@@ -41,33 +41,6 @@ const Card = ({ nonProfitsObj, onPress }) => (
 );
 
 export default function Recommendation({ navigation, nonProfitsList }) {
-  //   const [nonProfits, setNonProfits] = useState([]);
-  // useEffect(() => {
-  //     axios
-  //         .get(
-  //             `https://partners.every.org/v0.2/search/pets?apiKey=pk_live_b91eec9a87a8a37187b1e1d1bb505b63`
-  //         )
-  //         .then((response) => {
-  //             let arr = [];
-  //             response.data.nonprofits.map((data) => {
-  //                 arr.push(
-  //                     new NonProfit(
-  //                         data.ein,
-  //                         data.name,
-  //                         data.profileUrl,
-  //                         data.matchedTerms,
-  //                         data.slug,
-  //                         data.location,
-  //                         data.tags,
-  //                         data.logoUrl
-  //                     )
-  //                 );
-  //             });
-
-  //             setNonProfits(arr);
-  //         });
-  // }, []);
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>You may interested</Text>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Card, Button } from "react-native-paper";
 
@@ -32,8 +32,35 @@ export default FavouriteScreen = ({ navigation }) => {
   };
 
   const CardItem = ({ detail }) => (
-    <Card style={styles.cardContainer}>
-      <Text>{detail.name}</Text>
+    <Card style={styles.cardContainer} onPress={() => {
+      navigation.navigate("NonProfitDetail", {
+        title: detail.name,
+        ein: detail.ein,
+      })
+    }}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginBottom: 10,
+          paddingHorizontal: 15,
+          paddingTop: 15,
+        }}
+      >
+        <Image
+          source={{ uri: detail.logoUrl }}
+          height={50}
+          width={50}
+          style={{ backgroundColor: "black" }}
+          borderRadius={30}
+        />
+        <Text style={{ paddingHorizontal: 10, width: "90%" }}>
+          {detail.name}
+        </Text>
+      </View>
+      <View>
+        <Text numberOfLines={1} style={{ paddingHorizontal: 15, }}>📍{detail.locationAddress}</Text>
+      </View>
       <Button
         onPress={() => {
           setFavouriteList(

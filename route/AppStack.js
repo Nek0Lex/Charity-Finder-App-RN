@@ -13,20 +13,6 @@ const Stack = createNativeStackNavigator();
 
 export default function AppStack() {
   return (
-    // <Tab.Navigator screenOptions={({ route }) => ({
-    //     tabBarIcon: ({ focused, color, size }) => {
-    //         let iconName;
-
-    //         if (route.name === 'Home') {
-    //             iconName = "home";
-    //         }
-
-    //         return <MaterialCommunityIcons name="home" size={24} color="black" />;
-    //     },
-    // })}>
-    //     <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-    //     {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
-    // </Tab.Navigator>
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
@@ -39,12 +25,22 @@ export default function AppStack() {
         options={({ route }) => ({
           headerShown: true,
           title: route.params.title,
+          headerStyle: {
+            backgroundColor: 'green',
+          },
+          headerTintColor: 'white',
         })}
       />
       <Stack.Screen
         name="Favourite"
         component={FavouriteScreen}
-        options={({ route }) => ({ headerShown: true, title: "Favourite" })}
+        options={({ route }) => ({
+          headerShown: true, title: "Favourite",
+          headerStyle: {
+            backgroundColor: 'green',
+          },
+          headerTintColor: 'white',
+        })}
       />
     </Stack.Navigator>
   );
